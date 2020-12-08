@@ -10,6 +10,10 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            Wyrazy wyrazy = new Wyrazy();
+            wyrazy.Symulacja();
+
+            Console.ReadKey();
         }
     }
 }
