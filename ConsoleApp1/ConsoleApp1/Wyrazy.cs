@@ -21,20 +21,41 @@ namespace ConsoleApp1
         {
             Random random = new Random();
             string badana = wyrazy[random.Next(0, wyrazy.Length-1)];
-            string badana1 = null;
-            for (int i =0; i < 100; i++)
+            string zwyciesca = null;
+
+            int szukanyIndeks = 0;
+            for (int j = 0; j < wyrazy.Length; j++)
             {
-                int szukanyIndeks = 0;
-                for(int j = 0; j<wyrazy.Length; j++)
+                if (badana == wyrazy[j])
                 {
-                    if(badana == wyrazy[j])
-                    {
-                        szukanyIndeks = j;
-                    }
+                    szukanyIndeks = j;
                 }
-                badana = PodajWynik(prawdopodobienstwa[szukanyIndeks, szukanyIndeks + 1], badana, wyrazy[szukanyIndeks+1]);
-                Console.WriteLine(badana);
             }
+            Console.WriteLine("wylosowany 1 wyraz: " + badana);
+
+            Console.WriteLine("Ma indeks: " + szukanyIndeks);
+
+            for(int i = 0; i< wyrazy.Length; i++)
+            {
+                zwyciesca = PodajWynik(prawdopodobienstwa[szukanyIndeks, i], badana, wyrazy[i]);
+                Console.WriteLine("Zwyc {0} meczu to:  {1}, walczy ", i, zwyciesca);
+                Console.WriteLine(wyrazy[i]);
+            }
+
+
+            //for (int i =0; i < 100; i++)
+            //{
+            //    int szukanyIndeks = 0;
+            //    for(int j = 0; j<wyrazy.Length; j++)
+            //    {
+            //        if(badana == wyrazy[j])
+            //        {
+            //            szukanyIndeks = j;
+            //        }
+            //    }
+            //    badana = PodajWynik(prawdopodobienstwa[szukanyIndeks, szukanyIndeks + 1], badana, wyrazy[szukanyIndeks+1]);
+            //    Console.WriteLine(badana);
+            //}
         }
         public string PodajWynik(double prawdop, string pierwsza, string druga)
         {
@@ -54,5 +75,7 @@ namespace ConsoleApp1
                 return pierwsza;
             }
         }
+
+
     }
 }   
