@@ -20,17 +20,12 @@ namespace ConsoleApp1
         public void Symulacja()
         {
             Random random = new Random();
-            string badana = wyrazy[random.Next(0, wyrazy.Length-1)];
+            int randomIndex = random.Next(0, wyrazy.Length - 1);
+            string badana = wyrazy[randomIndex];
             string zwyciesca = null;
 
-            int szukanyIndeks = 0;
-            for (int j = 0; j < wyrazy.Length; j++)
-            {
-                if (badana == wyrazy[j])
-                {
-                    szukanyIndeks = j;
-                }
-            }
+            int szukanyIndeks = randomIndex;
+           
             Console.WriteLine("wylosowany 1 wyraz: " + badana);
 
             Console.WriteLine("Ma indeks: " + szukanyIndeks);
@@ -41,21 +36,6 @@ namespace ConsoleApp1
                 Console.WriteLine("Zwyc {0} meczu to:  {1}, walczy ", i, zwyciesca);
                 Console.WriteLine(wyrazy[i]);
             }
-
-
-            //for (int i =0; i < 100; i++)
-            //{
-            //    int szukanyIndeks = 0;
-            //    for(int j = 0; j<wyrazy.Length; j++)
-            //    {
-            //        if(badana == wyrazy[j])
-            //        {
-            //            szukanyIndeks = j;
-            //        }
-            //    }
-            //    badana = PodajWynik(prawdopodobienstwa[szukanyIndeks, szukanyIndeks + 1], badana, wyrazy[szukanyIndeks+1]);
-            //    Console.WriteLine(badana);
-            //}
         }
         public string PodajWynik(double prawdop, string pierwsza, string druga)
         {
@@ -66,9 +46,6 @@ namespace ConsoleApp1
             if(losowa < (prawdop * 100))
             {
                 return druga;
-            }else if(losowa == (prawdop * 100))
-            {
-                return "remis";
             }
             else
             {
