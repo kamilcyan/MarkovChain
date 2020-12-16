@@ -6,21 +6,14 @@ namespace ConsoleApp1
     class Wyrazy
     {
         string[] wyrazy = {"zerowy", "pierwszy", "drugi", "trzeci", "czwarty"};
-
-
-
-
-
         
         public void Symulacja()
         {
 
             Dictionary<int, double> slownik = new Dictionary<int, double>();
-            for(int i = 0; i<10; i++)
-            {
-                slownik = TworzenieSlownika(Array.IndexOf(wyrazy, WyborWyrazu(slownik)));
-            }
+            slownik = TworzenieSlownika(0);
 
+            string szukana = WyborWyrazu(slownik);
         }
 
         void RysujSlownik(Dictionary<int, double> s)
