@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -10,47 +7,84 @@ namespace ConsoleApp1
     {
         string[] wyrazy = {"zerowy", "pierwszy", "drugi", "trzeci", "czwarty"};
 
-        double[,] prawdopodobienstwa = { { 0.1, 0.2, 0.3, 0.1, 0.2},
-                                         { 0.3, 0.4, 0.1, 0.2, 0.1 },
-                                         { 0.1, 0.1, 0.1, 0.5, 0.3 },
-                                         { 0.1, 0.1, 0.2, 0.1, 0.3 },
-                                         { 0.4, 0.2, 0.3, 0.1, 0.1 },
-                                       };
+        
+
+
 
         public void Symulacja()
         {
             Random random = new Random();
             int randomIndex = random.Next(0, wyrazy.Length - 1);
             string badana = wyrazy[randomIndex];
-            string zwyciesca = null;
 
             int szukanyIndeks = randomIndex;
-           
-            Console.WriteLine("wylosowany 1 wyraz: " + badana);
 
-            Console.WriteLine("Ma indeks: " + szukanyIndeks);
+
+            Dictionary<int, double> slow = new Dictionary<int, double>();
+
+            slow = TworzenieSlownika(1);
+
+            foreach(var item in slow)
+            {
+                Console.WriteLine(item.Key + " " + item.Value);
+            }
+            WyborWyrazu(slow);
+
+        }
+
+        public Dictionary<int, double> TworzenieSlownika(int indeks)
+        {
+            double suma = 0;
+            double[] tab = new double[2];
+
+            double[,] prawdopodobienstwa = { 
+                                         { 0.1, 0.2, 0.3, 0.1, 0.2},
+                                         { 0.3, 0.4, 0.1, 0.2, 0.1 },
+                                         { 0.1, 0.1, 0.1, 0.5, 0.3 },
+                                         { 0.1, 0.1, 0.2, 0.1, 0.3 },
+                                         { 0.4, 0.2, 0.3, 0.1, 0.1 },
+                                       };
+            Dictionary<int, double> slownik = new Dictionary<int, double>();
 
             for(int i = 0; i< wyrazy.Length; i++)
             {
-                zwyciesca = PodajWynik(prawdopodobienstwa[szukanyIndeks, i], badana, wyrazy[i]);
-                Console.WriteLine("Zwyc {0} meczu to:  {1}, walczy ", i, zwyciesca);
-                Console.WriteLine(wyrazy[i]);
+                suma += prawdopodobienstwa[i, indeks];
+                slownik.Add(i, prawdopodobienstwa[i, indeks]);
             }
+
+
+            return slownik;
         }
-        public string PodajWynik(double prawdop, string pierwsza, string druga)
+
+        public string WyborWyrazu(Dictionary<int, double> slownik)
+        {
+            string wybrana;
+            double suma = 0;
+            double szukana = Losuj();
+
+            Console.WriteLine("szukana " + szukana);
+
+            foreach (var item in slownik)
+            {
+                suma += item.Value;
+
+                if(szukana /100  < suma && szukana/100 > suma - item.Value)
+                {
+                    wybrana = wyrazy[item.Key];
+                    Console.WriteLine(wybrana);
+                    return wybrana;
+                }
+            }
+
+            return null;
+        }
+
+        int Losuj()
         {
             Random random = new Random();
+            int wylosowana = random.Next(0, 100);
 
-            int losowa = random.Next(1, 100);
-
-            if(losowa < (prawdop * 100))
-            {
-                return druga;
-            }
-            else
-            {
-                return pierwsza;
-            }
+            return wylosowana;
         }
 
 
