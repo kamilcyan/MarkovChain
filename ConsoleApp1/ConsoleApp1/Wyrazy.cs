@@ -7,35 +7,34 @@ namespace ConsoleApp1
     {
         string[] wyrazy = {"zerowy", "pierwszy", "drugi", "trzeci", "czwarty"};
 
+
+
+
+
         
-
-
-
         public void Symulacja()
         {
-            Random random = new Random();
-            int randomIndex = random.Next(0, wyrazy.Length - 1);
-            string badana = wyrazy[randomIndex];
 
-            int szukanyIndeks = randomIndex;
+            Dictionary<int, double> slownik = new Dictionary<int, double>();
+            for(int i = 0; i<10; i++)
+            {
+                slownik = TworzenieSlownika(Array.IndexOf(wyrazy, WyborWyrazu(slownik)));
+            }
 
+        }
 
-            Dictionary<int, double> slow = new Dictionary<int, double>();
+        void RysujSlownik(Dictionary<int, double> s)
+        {
 
-            slow = TworzenieSlownika(1);
-
-            foreach(var item in slow)
+            foreach (var item in s)
             {
                 Console.WriteLine(item.Key + " " + item.Value);
             }
-            WyborWyrazu(slow);
-
         }
 
         public Dictionary<int, double> TworzenieSlownika(int indeks)
         {
             double suma = 0;
-            double[] tab = new double[2];
 
             double[,] prawdopodobienstwa = { 
                                          { 0.1, 0.2, 0.3, 0.1, 0.2},
@@ -52,6 +51,7 @@ namespace ConsoleApp1
                 slownik.Add(i, prawdopodobienstwa[i, indeks]);
             }
 
+            RysujSlownik(slownik);
 
             return slownik;
         }
